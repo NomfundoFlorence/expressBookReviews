@@ -39,13 +39,23 @@ public_users.get("/author/:author", function (req, res) {
     return res.send(JSON.stringify(filteredBooks, null, 4));
   }
 
-  res.send(JSON.stringify(books[author], null, 4));
   return res.status(300).json({ message: "Yet to be implemented" });
 });
 
 // Get all books based on title
 public_users.get("/title/:title", function (req, res) {
   //Write your code here
+  const title = req.params.title;
+  const bookKeys = Object.keys(books);
+
+  const filteredBooks = bookKeys
+    .map((key) => books[key])
+    .filter((book) => book.title.toLowerCase() === title.toLowerCase());
+
+  if (filteredBooks.length > 0) {
+    return res.send(JSON.stringify(filteredBooks, null, 4));
+  }
+
   return res.status(300).json({ message: "Yet to be implemented" });
 });
 
